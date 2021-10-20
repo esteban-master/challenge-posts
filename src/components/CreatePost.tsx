@@ -3,7 +3,7 @@ import { useCreatePostMutation } from "../redux/posts";
 import { CreatePostForm } from "./CreatePostForm";
 
 export const CreatePost = () => {
-  const [createPost, resultCreatePost] = useCreatePostMutation();
+  const [createPost, { isLoading }] = useCreatePostMutation();
 
   function createNewPost({
     name,
@@ -16,7 +16,7 @@ export const CreatePost = () => {
   }
   return (
     <div>
-      <CreatePostForm onSubmit={createNewPost} />
+      <CreatePostForm isLoading={isLoading} onSubmit={createNewPost} />
     </div>
   );
 };
