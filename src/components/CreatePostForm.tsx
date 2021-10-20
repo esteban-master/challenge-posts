@@ -30,7 +30,7 @@ export const CreatePostForm = ({
         <form onSubmit={formik.handleSubmit}>
           <div className="space-y-3 ">
             <div>
-              <label className="text-xl font-bold" htmlFor="name">
+              <label className="text-xl font-semibold" htmlFor="name">
                 Nombre:
               </label>
               <input
@@ -47,7 +47,7 @@ export const CreatePostForm = ({
               </div>
             </div>
             <div>
-              <label className="text-xl font-bold" htmlFor="description">
+              <label className="text-xl font-semibold" htmlFor="description">
                 Descripcion:
               </label>
               <textarea
