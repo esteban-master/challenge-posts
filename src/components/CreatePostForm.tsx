@@ -28,7 +28,7 @@ export const CreatePostForm = ({
     >
       {(formik) => (
         <form onSubmit={formik.handleSubmit}>
-          <div className="space-y-3 border border-gray-300 rounded-lg p-5">
+          <div className="space-y-3 ">
             <div>
               <label className="text-xl font-bold" htmlFor="name">
                 Nombre:

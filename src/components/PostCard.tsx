@@ -3,6 +3,7 @@ import { useDeletePostMutation } from "../redux/posts";
 import TimeAgoReact from "timeago-react";
 import * as timeago from "timeago.js";
 import es from "timeago.js/lib/lang/es";
+import { toast } from "react-toastify";
 timeago.register("es", es);
 export const PostCard = ({ post }: { post: Post }) => {
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
@@ -20,7 +21,10 @@ export const PostCard = ({ post }: { post: Post }) => {
         <button
           className="bg-red-500 text-white px-5 py-1 rounded-lg"
           disabled={isDeleting}
-          onClick={() => deletePost(post.id)}
+          onClick={() => {
+            deletePost(post.id);
+            toast.success(`${post.name} eliminado con exito`);
+          }}
         >
           {isDeleting ? "Deleting..." : "Delete"}
         </button>
