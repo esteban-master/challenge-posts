@@ -1,13 +1,10 @@
-import { useGetPostsQuery } from "../redux/posts";
 import { search } from "../utils/searchPosts";
 import { ListPosts } from "./ListPosts";
+import { usePosts } from "../react-query/posts";
 
 export const FilterPosts = ({ searchText }: { searchText: string }) => {
-  const { posts } = useGetPostsQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      posts: data && searchText ? search(data, searchText) : [],
-    }),
-  });
+  const { data } = usePosts();
+  const posts = data && searchText ? search(data, searchText) : [];
 
   if (posts.length === 0) return null;
   return (

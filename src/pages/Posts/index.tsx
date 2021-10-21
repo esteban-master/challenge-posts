@@ -1,9 +1,10 @@
 import { CreatePost } from "../../components/CreatePost";
-import { useGetPostsQuery } from "../../redux/posts";
 import { Search } from "../../components/Search";
+import { usePosts } from "../../react-query/posts";
 
 export const PostsPage = () => {
-  const { data, isLoading, isSuccess } = useGetPostsQuery();
+  const { data, isLoading, isSuccess } = usePosts();
+
   return (
     <div className="space-y-3 py-8">
       <CreatePost />
