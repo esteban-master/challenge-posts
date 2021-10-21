@@ -19,7 +19,7 @@ export const PostCard = ({ post }: { post: Post }) => {
 
       <div className="flex justify-end">
         <button
-          className="bg-red-500 text-white px-5 py-1 rounded-lg"
+          className="bg-red-500 hover:bg-red-400 text-white px-5 py-1 rounded-lg"
           disabled={isDeleting}
           onClick={() => {
             deletePost(post.id);

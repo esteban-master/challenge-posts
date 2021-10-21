@@ -4,6 +4,8 @@ import { Post } from "../../models";
 export const postsAPI = createApi({
   reducerPath: "postsApi",
   baseQuery: fetchBaseQuery({ baseUrl: `http://localhost:3000/` }),
+  refetchOnReconnect: true,
+  refetchOnFocus: true,
   tagTypes: ["Posts"],
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
