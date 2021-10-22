@@ -3,7 +3,7 @@ import { mockData } from "../mocks/handlers";
 import { waitFor } from "@testing-library/react";
 import { PostsPage } from "../pages/Posts/index";
 import userEvent from "@testing-library/user-event";
-import { renderWithClient } from "./utils/utils";
+import { renderWithClient } from "./utils";
 
 describe("Imprime los post", () => {
   test("Encuentra el titulo", async () => {
@@ -30,12 +30,13 @@ describe("Imprime los post", () => {
     const queryClient = new QueryClient();
     const result = renderWithClient(queryClient, <PostsPage />);
     const [button1] = await result.findAllByText(/delete/i);
+    const [primerPost] = mockData;
     userEvent.click(button1);
     await waitFor(() => {
-      expect(result.queryByText(/Publicacion mock 1/i)).not.toBeInTheDocument();
+      expect(result.queryByText(primerPost.name)).not.toBeInTheDocument();
     });
     expect(
-      result.getByRole("heading", { name: `1 posts publicados` })
+      result.getByRole("heading", { name: `2 posts publicados` })
     ).toBeInTheDocument();
   });
   test("Crear nuevo post", async () => {

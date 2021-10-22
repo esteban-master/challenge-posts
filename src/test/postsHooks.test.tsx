@@ -1,28 +1,27 @@
-import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { renderHook } from "@testing-library/react-hooks";
-import { usePosts, useDeletePost } from "../react-query/posts";
+import { usePosts, useDeletePost } from "../react-query/postsHooks";
 import { mockData } from "../mocks/handlers";
-import { renderWithClient } from "./utils/utils";
+import { renderWithClient } from "./utils";
 import userEvent from "@testing-library/user-event";
 import { waitFor } from "@testing-library/react";
 
-const queryClient = new QueryClient();
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
-
 describe("Test de hooks posts", () => {
-  test.skip("Obtener los posts", async () => {
+  test("Obtener los posts", async () => {
+    const queryClient = new QueryClient();
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+
     const { result, waitFor } = renderHook(() => usePosts(), { wrapper });
 
     await waitFor(() => {
       return result.current.isSuccess;
     });
-    console.log(result.current);
     expect(result.current.data).toEqual(mockData);
   });
   test("Hook de borrar 1 post", async () => {
+    const queryClient = new QueryClient();
     function PageTest() {
       const { mutate } = useDeletePost(queryClient);
       const { data, isLoading } = usePosts();
@@ -51,8 +50,10 @@ describe("Test de hooks posts", () => {
       );
     }
 
-    const { getByText, findByText, queryByText, findByRole, debug } =
-      renderWithClient(queryClient, <PageTest />);
+    const { getByText, findByText, queryByText, findByRole } = renderWithClient(
+      queryClient,
+      <PageTest />
+    );
     expect(getByText("Cargando...")).toBeInTheDocument();
     const [primerPost] = mockData;
     expect(await findByText(primerPost.name)).toBeInTheDocument();

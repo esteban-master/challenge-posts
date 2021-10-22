@@ -3,7 +3,7 @@ import TimeAgoReact from "timeago-react";
 import * as timeago from "timeago.js";
 import es from "timeago.js/lib/lang/es";
 
-import { useDeletePost } from "../react-query/posts";
+import { useDeletePost } from "../react-query/postsHooks";
 import { useQueryClient } from "react-query";
 timeago.register("es", es);
 

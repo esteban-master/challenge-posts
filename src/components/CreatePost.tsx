@@ -1,7 +1,7 @@
 import { Post } from "../models";
 import { CreatePostForm } from "./CreatePostForm";
 
-import { useCreatePost } from "../react-query/posts";
+import { useCreatePost } from "../react-query/postsHooks";
 import { useQueryClient } from "react-query";
 
 export const CreatePost = () => {

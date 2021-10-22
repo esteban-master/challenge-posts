@@ -1,6 +1,6 @@
 import { search } from "../utils/searchPosts";
 import { ListPosts } from "./ListPosts";
-import { usePosts } from "../react-query/posts";
+import { usePosts } from "../react-query/postsHooks";
 
 export const FilterPosts = ({ searchText }: { searchText: string }) => {
   const { data } = usePosts();

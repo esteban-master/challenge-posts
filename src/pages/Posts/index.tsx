@@ -1,6 +1,6 @@
 import { CreatePost } from "../../components/CreatePost";
 import { Search } from "../../components/Search";
-import { usePosts } from "../../react-query/posts";
+import { usePosts } from "../../react-query/postsHooks";
 
 export const PostsPage = () => {
   const { data, isLoading, isSuccess } = usePosts();
