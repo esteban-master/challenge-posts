@@ -13,9 +13,7 @@ type ErrorResponse = AxiosError<{
 export const usePosts = () =>
   useQuery<Post[]>("posts", async () => {
     const { data } = await api.get<Post[]>("/posts");
-    return data.sort((postA, postB) =>
-      postB.createdAt.localeCompare(postA.createdAt)
-    );
+    return data;
   });
 
 export const useCreatePost = (queryClient: QueryClient) =>

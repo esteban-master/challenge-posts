@@ -24,11 +24,12 @@ export const PostCard = ({ post }: { post: Post }) => {
         <button
           className="bg-red-500 hover:bg-red-400 text-white px-5 py-1 rounded-lg"
           disabled={deletePost.isLoading}
+          type="button"
           onClick={() => {
             deletePost.mutate({ id: post.id });
           }}
         >
-          {deletePost.isLoading ? "Deleting..." : "Delete"}
+          {deletePost.isLoading ? "Deleting..." : `Delete`}
         </button>
       </div>
     </div>

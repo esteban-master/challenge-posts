@@ -4,12 +4,10 @@ import { usePosts } from "../../react-query/posts";
 
 export const PostsPage = () => {
   const { data, isLoading, isSuccess } = usePosts();
-
+  if (isLoading) return <span>Cargando publicaciones...</span>;
   return (
     <div className="space-y-3 py-8">
       <CreatePost />
-
-      {isLoading && <span>Cargando publicaciones...</span>}
 
       {isSuccess && data ? <Search posts={data} /> : null}
     </div>
