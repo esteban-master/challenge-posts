@@ -21,8 +21,8 @@ export const PostCard = ({ post }: { post: Post }) => {
         <button
           className="bg-red-500 hover:bg-red-400 text-white px-5 py-1 rounded-lg"
           disabled={isDeleting}
-          onClick={() => {
-            deletePost(post.id);
+          onClick={async () => {
+            await deletePost(post.id);
             toast.success(`${post.name} eliminado con exito`);
           }}
         >

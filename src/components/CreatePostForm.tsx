@@ -1,14 +1,33 @@
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { Post } from "../models";
 
-export const CreatePostForm = ({
-  onSubmit,
-  isLoading,
-}: {
-  onSubmit: (values: Pick<Post, "name" | "description">) => void;
-  isLoading: boolean;
-}) => {
+import { useCreatePostMutation } from "../redux/posts";
+
+type PostValuesForm = Pick<Post, "name" | "description">;
+
+export const CreatePostForm = () => {
+  const [createPost, { isLoading }] = useCreatePostMutation();
+
+  function createNewPost({
+    values,
+    formikHelpers,
+  }: {
+    values: PostValuesForm;
+    formikHelpers: FormikHelpers<PostValuesForm>;
+  }) {
+    try {
+      const { name, description } = values;
+      createPost({
+        name,
+        description,
+      }).then(() => {
+        formikHelpers.resetForm();
+      });
+    } catch (error) {
+      console.error("ssssssssssssssss", error);
+    }
+  }
   return (
     <Formik
       initialValues={{ name: "", description: "" }}
@@ -21,10 +40,9 @@ export const CreatePostForm = ({
           .required("La descripcion es requerida")
           .trim(),
       })}
-      onSubmit={(values, { resetForm }) => {
-        onSubmit(values);
-        resetForm();
-      }}
+      onSubmit={(values, formikHelpers) =>
+        createNewPost({ values, formikHelpers })
+      }
     >
       {(formik) => (
         <form onSubmit={formik.handleSubmit}>

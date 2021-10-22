@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Post } from "../../models";
+import { toast } from "react-toastify";
 
 export const postsAPI = createApi({
   reducerPath: "postsApi",
   baseQuery: fetchBaseQuery({ baseUrl: `http://localhost:3000/` }),
-  // refetchOnReconnect: true,
-  // refetchOnFocus: true,
-
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => "posts",
@@ -25,8 +23,9 @@ export const postsAPI = createApi({
               draft.unshift(data);
             })
           );
+          toast.success(`Post creado con exito!`);
         } catch (error) {
-          console.log("Error en create post", error);
+          toast.error(`Error al crear post`);
         }
       },
     }),
@@ -35,20 +34,6 @@ export const postsAPI = createApi({
         url: `posts/${id}`,
         method: "DELETE",
       }),
-      // invalidatesTags: (result, error, id) => [{ type: "Posts", id }],
-      // Optimistic
-      // onQueryStarted(id, { dispatch, queryFulfilled }) {
-      //   const patchResult = dispatch(
-      //     postsAPI.util.updateQueryData("getPosts", undefined, (draft) => {
-      //       const indexFind = draft.findIndex(
-      //         (p) => p.id.toString() === id.toString()
-      //       );
-      //       draft.splice(indexFind, 1);
-      //     })
-      //   );
-      //   queryFulfilled.catch(patchResult.undo);
-      // },
-      // Pesimictic
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
