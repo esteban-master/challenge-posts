@@ -9,10 +9,10 @@ import { ToastContainer } from "react-toastify";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 
-// if (process.env.NODE_ENV === "development") {
-//   const { worker } = require("./mocks/browser");
-//   worker.start();
-// }
+if (process.env.NODE_ENV === "development") {
+  const { worker } = require("./mocks/browser");
+  worker.start();
+}
 
 ReactDOM.render(
   <Provider store={store}>
