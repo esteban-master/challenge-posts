@@ -1,31 +1,29 @@
 import { Formik, FormikHelpers } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Post } from "../models";
-
-import { useCreatePostMutation } from "../redux/posts";
+import { addPost } from "../redux/postsState";
+import { usePosts, useStoreDispatch } from "../redux/store";
 
 type PostValuesForm = Pick<Post, "name" | "description">;
 
 export const CreatePostForm = () => {
-  const [createPost, { isLoading }] = useCreatePostMutation();
-
-  function createNewPost({
+  const { isCreating } = usePosts();
+  const dispatch = useStoreDispatch();
+  async function createNewPost({
     values,
     formikHelpers,
   }: {
     values: PostValuesForm;
     formikHelpers: FormikHelpers<PostValuesForm>;
   }) {
+    const { name, description } = values;
     try {
-      const { name, description } = values;
-      createPost({
-        name,
-        description,
-      }).then(() => {
-        formikHelpers.resetForm();
-      });
-    } catch (error) {
-      console.error("ssssssssssssssss", error);
+      await dispatch(addPost({ name, description })).unwrap();
+      formikHelpers.resetForm();
+      toast.success(`Post creado correctamente!`);
+    } catch (error: any) {
+      toast.error(`Post no se pudo crear`);
     }
   }
   return (
@@ -86,7 +84,7 @@ export const CreatePostForm = () => {
               className="bg-blue-500 hover:bg-blue-400 text-white px-5 py-2 rounded-lg"
               type="submit"
             >
-              {isLoading ? "Creando..." : "Crear"}
+              {isCreating ? "Creando..." : "Crear"}
             </button>
           </div>
         </form>

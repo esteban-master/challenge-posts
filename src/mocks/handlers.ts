@@ -26,15 +26,16 @@ export const mockData = [
 ];
 
 export const handlers = [
-  rest.get("http://localhost:3000/posts", (req, res, ctx) => {
+  rest.get("http://localhost:3001/posts", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockData));
   }),
-  rest.delete("http://localhost:3000/posts/:id", (req, res, ctx) => {
+  rest.delete("http://localhost:3001/posts/:id", (req, res, ctx) => {
     const { id } = req.params;
     const elementoEliminado = mockData.find((p) => p.id.toString() === id);
     return res(ctx.status(200), ctx.json(elementoEliminado));
   }),
-  rest.post("http://localhost:3000/posts", (req, res, ctx) => {
+  rest.post("http://localhost:3001/posts", (req, res, ctx) => {
+    console.log("Body:::", req.body);
     const { name, description } = req.body as Pick<
       Post,
       "description" | "name"

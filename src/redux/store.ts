@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { postsAPI } from "./posts";
-
+import { useDispatch, useSelector } from "react-redux";
+import postsReducer from "./postsState";
 export const store = configureStore({
   reducer: {
-    [postsAPI.reducerPath]: postsAPI.reducer,
+    posts: postsReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(postsAPI.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
   devTools: process.env.NODE_ENV === "development",
 });
 
-setupListeners(store.dispatch);
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export const usePosts = () => useSelector((state: RootState) => state.posts);
+export const useStoreDispatch = () => useDispatch<AppDispatch>();

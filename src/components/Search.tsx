@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Post } from "../models";
-import { FilterPosts } from "./FilterPosts";
-import { ListPosts } from "./ListPosts";
+import { search } from "../utils/searchPosts";
 
-export const Search = ({ posts }: { posts: Post[] }) => {
+export const Search = ({
+  posts,
+  searchPosts,
+}: {
+  posts: Post[];
+  searchPosts: (posts: Post[]) => void;
+}) => {
   const [textSearch, setTextSearch] = useState("");
+
+  useEffect(() => {
+    if (textSearch) {
+      searchPosts(search(posts, textSearch));
+    } else {
+      searchPosts([]);
+    }
+  }, [textSearch, posts]);
+
   return (
     <div>
       <input
@@ -13,18 +27,6 @@ export const Search = ({ posts }: { posts: Post[] }) => {
         onChange={(e) => setTextSearch(e.target.value)}
         placeholder="Buscar posts..."
       />
-      <FilterPosts searchText={textSearch} />
-
-      {!textSearch && (
-        <div>
-          <h2 className="text-2xl my-2">
-            {posts.length === 0
-              ? "No hay posts publicados"
-              : `${posts.length} posts publicados`}
-          </h2>
-          <ListPosts posts={posts} />
-        </div>
-      )}
     </div>
   );
 };

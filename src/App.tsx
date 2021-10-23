@@ -1,5 +1,3 @@
-import "react-toastify/dist/ReactToastify.css";
-
 import { PostsPage } from "./pages/Posts";
 
 function App() {
