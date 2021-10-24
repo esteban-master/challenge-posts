@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import postsReducer from "./postsState";
+
 export const store = configureStore({
   reducer: {
     posts: postsReducer,

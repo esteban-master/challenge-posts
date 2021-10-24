@@ -5,9 +5,9 @@ import es from "timeago.js/lib/lang/es";
 import { toast } from "react-toastify";
 
 import { usePosts, useStoreDispatch } from "../redux/store";
-
 import { deletePost } from "../redux/postsState";
 timeago.register("es", es);
+
 export const PostCard = ({
   post,
   indexPost,
@@ -17,6 +17,7 @@ export const PostCard = ({
 }) => {
   const { isDeleting } = usePosts();
   const dispatch = useStoreDispatch();
+
   return (
     <div className="bg-purple-100 rounded-lg px-5 py-2 space-y-2">
       <h2 className="text-2xl flex justify-between items-center">
@@ -31,6 +32,7 @@ export const PostCard = ({
         <button
           className="bg-red-500 hover:bg-red-400 text-white px-5 py-1 rounded-lg"
           disabled={isDeleting[indexPost].status}
+          type="button"
           onClick={() => {
             dispatch(deletePost({ id: post.id, indexPost }))
               .unwrap()

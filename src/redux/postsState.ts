@@ -38,7 +38,7 @@ export const addPost = createAsyncThunk<
   }
 });
 
-interface StatePost {
+export interface StatePost {
   posts: Post[];
   isLoading: boolean;
   isCreating: boolean;
