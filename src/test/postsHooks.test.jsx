@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { mockData } from "../mocks/handlers";
+import { delayApi, mockData } from "../mocks/handlers";
 import { PostsPage } from "../pages/Posts";
 import { usePosts } from "../redux/store";
 import { reduxProvider } from "./utils";
@@ -16,7 +16,7 @@ describe("Test hooks postsApi", () => {
     expect(result.current.posts).toEqual([]);
     expect(result.current.isLoading).toBe(true);
 
-    await waitForNextUpdate();
+    await waitForNextUpdate({ timeout: delayApi + 100 });
     expect(result.current.posts).toEqual(mockData);
     expect(result.current.isLoading).toBeFalsy();
     expect(result.current.isDeleting).toEqual([
