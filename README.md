@@ -1,4 +1,4 @@
-# App challengue entrevista TCIT
+# App challengue entrevista
 
 ## Mejoras realizar y comentarios de los entrevistadores:
 
