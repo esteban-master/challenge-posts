@@ -34,7 +34,7 @@ export const handlers = [
   rest.delete(`${process.env.REACT_APP_API}/posts/:id`, (req, res, ctx) => {
     const { id } = req.params;
     const elementoEliminado = mockData.find((p) => p.id.toString() === id);
-    // mockData = mockData.filter((p) => p.id !== id);
+    mockData = mockData.filter((p) => p.id !== id);
     return res(
       ctx.delay(delayApi),
       ctx.status(200),
@@ -49,11 +49,11 @@ export const handlers = [
     const newPost = {
       name,
       description,
-      id: 4,
+      id: mockData.length + 1,
       createdAt: "2021-10-21T22:39:18.320Z",
       updatedAt: "2021-10-21T22:39:18.320Z",
     };
-    // mockData.unshift(newPost);
+    mockData.unshift(newPost);
     return res(ctx.delay(delayApi), ctx.status(200), ctx.json(newPost));
   }),
 ];
