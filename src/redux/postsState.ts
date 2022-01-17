@@ -3,7 +3,9 @@ import axios from "axios";
 import { Post } from "../models";
 
 export const getPosts = createAsyncThunk<Post[]>("posts/getPosts", async () => {
-  const { data } = await axios.get<Post[]>("http://localhost:3001/posts");
+  const { data } = await axios.get<Post[]>(
+    `${process.env.REACT_APP_API}/posts`
+  );
 
   return data;
 });
@@ -13,7 +15,7 @@ export const deletePost = createAsyncThunk<
 >("posts/deletePost", async ({ id }, { rejectWithValue }) => {
   try {
     const { data } = await axios.delete<Post>(
-      `http://localhost:3001/posts/${id}`
+      `${process.env.REACT_APP_API}/posts/${id}`
     );
 
     return data;
@@ -27,7 +29,7 @@ export const addPost = createAsyncThunk<
 >("posts/addPost", async (newPost, { rejectWithValue }) => {
   try {
     const { data } = await axios.post<Post>(
-      `http://localhost:3001/posts/`,
+      `${process.env.REACT_APP_API}/posts/`,
       newPost
     );
 

@@ -7,10 +7,25 @@ import userEvent from "@testing-library/user-event";
 const delay = delayApi + 100;
 
 describe("Test PagePost con redux", () => {
-  test("Crear nuevo post", async () => {
+  beforeEach(() => {
     const { wrapper } = reduxProvider();
     render(<PostsPage />, { wrapper });
+  });
 
+  test("Encuentra el titulo", async () => {
+    expect(
+      await screen.findByRole(
+        "heading",
+        {
+          name: `${mockData.length} posts publicados`,
+        },
+        {
+          timeout: delay,
+        }
+      )
+    ).toBeInTheDocument();
+  });
+  test("Crear nuevo post", async () => {
     const newPost = {
       name: "Test para redux",
       description: "Buenos dias redux, texto para hacer relleno!",
@@ -40,24 +55,7 @@ describe("Test PagePost con redux", () => {
     );
   });
 
-  test("Encuentra el titulo", async () => {
-    const { wrapper } = reduxProvider();
-    render(<PostsPage />, { wrapper });
-    expect(
-      await screen.findByRole(
-        "heading",
-        {
-          name: `${mockData.length} posts publicados`,
-        },
-        {
-          timeout: delay,
-        }
-      )
-    ).toBeInTheDocument();
-  });
   test("Encuentra el nombre de los posts listados", async () => {
-    const { wrapper } = reduxProvider();
-    render(<PostsPage />, { wrapper });
     await waitFor(
       () => {
         mockData.forEach((p) => {
@@ -72,9 +70,6 @@ describe("Test PagePost con redux", () => {
   });
 
   test("Elimina el primer post", async () => {
-    const { wrapper } = reduxProvider();
-    render(<PostsPage />, { wrapper });
-
     const [deleteButton1] = await screen.findAllByText(
       /delete/i,
       {},
@@ -91,8 +86,13 @@ describe("Test PagePost con redux", () => {
         timeout: delay,
       }
     );
+
     expect(
-      screen.getByRole("heading", { name: `2 posts publicados` })
+      screen.getByRole("heading", {
+        name: `${
+          mockData.filter((p) => p.id !== primerPost.id).length
+        } posts publicados`,
+      })
     ).toBeInTheDocument();
   });
 });
